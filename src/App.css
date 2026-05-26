@@ -7,13 +7,16 @@
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
   background-color: #f5f5f5;
   color: #333;
   line-height: 1.6;
@@ -40,7 +43,7 @@ body {
   padding: 20px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-header h1 {
@@ -78,7 +81,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
@@ -97,15 +100,36 @@ body {
 
 .search-input,
 .filter-select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 10px 14px;
+  background-color: #2f2f2f;
+  border: 1px solid #222;
+  border-radius: 6px;
+  color: #ffffff;
   font-size: 14px;
   min-width: 150px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .search-input {
   min-width: 200px;
+}
+
+select.filter-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M10.293%203.293L6%207.586 1.707%203.293A1%201%200%2000.293%204.707l5%205a1%201%200%20001.414%200l5-5a1%201%200%2010-1.414-1.414z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+  padding-right: 40px;
+}
+
+.search-input:focus,
+.filter-select:focus {
+  border-color: #3498db;
 }
 
 .clear-filters-btn {
@@ -131,7 +155,7 @@ body {
 .task-list {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
@@ -167,12 +191,23 @@ body {
   border-radius: 8px;
   padding: 20px;
   background: white;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.task-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .task-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
@@ -271,10 +306,18 @@ body {
   font-size: 14px;
 }
 
-.severity-low { color: #27ae60; }
-.severity-medium { color: #f39c12; }
-.severity-high { color: #e74c3c; }
-.severity-critical { color: #c0392b; }
+.severity-low {
+  color: #27ae60;
+}
+.severity-medium {
+  color: #f39c12;
+}
+.severity-high {
+  color: #e74c3c;
+}
+.severity-critical {
+  color: #c0392b;
+}
 
 .task-footer {
   border-top: 1px solid #ecf0f1;
@@ -300,7 +343,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,7 +358,7 @@ body {
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .task-form-header {
@@ -329,14 +372,20 @@ body {
 .task-form-header h2 {
   color: #2c3e50;
   margin: 0;
+  font-weight: 700;
 }
 
-.task-form-header button {
-  background: none;
-  border: none;
-  font-size: 24px;
+.close-modal-btn {
+  background: none !important;
+  border: none !important;
+  font-size: 28px !important;
   cursor: pointer;
   color: #7f8c8d;
+  padding: 0 !important;
+}
+
+.close-modal-btn:hover {
+  color: #333;
 }
 
 .task-form form {
@@ -349,67 +398,216 @@ body {
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: 600;
   color: #34495e;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+/* SLEEK DARK INPUT STYLING AS REQUESTED BY SCREENSHOTS */
+.form-input-dark,
+.form-textarea-dark {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 12px;
+  background-color: #2f2f2f; /* Dark grey charcoal background */
+  border: 1px solid #222;
+  border-radius: 6px;
+  color: #ffffff; /* White text */
   font-size: 14px;
   font-family: inherit;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  outline: none;
 }
 
-.form-group textarea {
+select.form-input-dark {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M10.293%203.293L6%207.586 1.707%203.293A1%201%200%2000.293%204.707l5%205a1%201%200%20001.414%200l5-5a1%201%200%2010-1.414-1.414z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 15px) center;
+  padding-right: 40px;
+}
+
+.form-input-dark:focus,
+.form-textarea-dark:focus {
+  border-color: #3498db;
+  box-shadow:
+    0 0 5px rgba(52, 152, 219, 0.4),
+    inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.form-textarea-dark {
   resize: vertical;
   min-height: 80px;
+}
+
+/* Custom Calendar Date picker text and indicator */
+.date-picker-input {
+  color-scheme: dark; /* Force dark calendar picker icon in chrome/edge */
+}
+
+/* Subtask and Acceptance Criteria Dynamic Row Layouts */
+.dynamic-row,
+.subtask-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+/* Premium Black rounded buttons for Subtask controls as shown in screenshots */
+.btn-dark-remove,
+.btn-subtask-remove {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-dark-remove:hover,
+.btn-subtask-remove:hover {
+  background-color: #222222;
+}
+
+.btn-dark-add,
+.btn-subtask-add {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.btn-dark-add:hover,
+.btn-subtask-add:hover {
+  background-color: #222222;
 }
 
 .form-error {
   color: #e74c3c;
   font-size: 12px;
   margin-top: 5px;
+  display: block;
 }
 
+/* Modal Actions Footer styling */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
   padding-top: 20px;
   border-top: 1px solid #eee;
+  margin-top: 25px;
 }
 
-.form-actions button {
-  padding: 10px 20px;
+.btn-cancel {
+  background-color: #95a5a6;
+  color: white;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  padding: 11px 22px;
   font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.form-actions button[type="button"] {
-  background: #95a5a6;
+.btn-cancel:hover {
+  opacity: 0.9;
+}
+
+.btn-submit {
+  background-color: #3498db;
   color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.form-actions button[type="submit"] {
-  background: #3498db;
-  color: white;
+.btn-submit:hover:not(:disabled) {
+  background-color: #2980b9;
 }
 
-.form-actions button:disabled {
+.btn-submit:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.form-actions button:hover:not(:disabled) {
-  opacity: 0.9;
+/* Optimistic Update Overlay styles on cards */
+.optimistic-pending {
+  opacity: 0.8;
+  border-style: dashed !important;
+  background-color: #fafbfc !important;
+}
+
+.optimistic-indicator {
+  position: absolute;
+  top: 15px;
+  right: 85px;
+  background: #f59e0b;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* Progress bar inside Card */
+.subtask-progress-bar {
+  background: #e2e8f0;
+  border-radius: 4px;
+  height: 8px;
+  width: 100%;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.subtask-progress-fill {
+  background: #22c55e;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.task-preview-section {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #555;
+  background: #f8f9fa;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border-left: 3px solid #cbd5e1;
+}
+
+.preview-text {
+  font-family: monospace;
+  white-space: pre-line;
+  color: #333;
+}
+
+.dynamic-details {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* Responsive Design */
@@ -419,16 +617,16 @@ body {
     gap: 15px;
     text-align: center;
   }
-  
+
   .filter-controls {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .task-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .task-footer {
     flex-direction: column;
     align-items: flex-start;

@@ -1,108 +1,129 @@
 // Main Dashboard Component
-// TODO: Implement the main container component
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
+import FilterBar from "./FilterBar";
 
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import TaskForm from './TaskForm';
-import TaskList from './TaskList';
-import FilterBar from './FilterBar';
+import {
+  selectAllTasks,
+  selectFilteredTasks,
+  selectTaskFormState,
+  selectUsers,
+  selectProjects,
+  selectFilters,
+  selectLoading,
+  selectErrors,
+} from "../store/selectors";
 
-// TODO: Import selectors and actions
-// import { 
-//   selectAllTasks,
-//   selectFilteredTasks,
-//   selectTaskFormState,
-//   selectUsers,
-//   selectProjects,
-//   selectFilters,
-//   selectLoading,
-//   selectErrors
-// } from '../store/selectors';
-
-// import {
-//   fetchTasksRequest,
-//   createTaskRequest,
-//   updateTaskRequest,
-//   deleteTaskRequest,
-//   openTaskForm,
-//   closeTaskForm,
-//   setFilters
-// } from '../store/actions';
+import {
+  fetchTasksRequest,
+  createTaskRequest,
+  updateTaskRequest,
+  deleteTaskRequest,
+  openTaskForm,
+  closeTaskForm,
+  setFilters,
+} from "../store/actions";
 
 const TaskDashboard = () => {
   const dispatch = useDispatch();
 
-  // TODO: Connect to Redux state using useSelector
-  
-  // TODO: Fetch initial data on component mount
-  
-  // TODO: Refetch tasks when filters change
+  // Connect to Redux state using selectors
+  const tasks = useSelector(selectFilteredTasks);
+  const taskForm = useSelector(selectTaskFormState);
+  const users = useSelector(selectUsers);
+  const projects = useSelector(selectProjects);
+  const filters = useSelector(selectFilters);
+  const loading = useSelector(selectLoading);
+  const errors = useSelector(selectErrors);
 
-  // TODO: Implement event handlers
+  // Fetch initial data on component mount
+  useEffect(() => {
+    dispatch({ type: "FETCH_USERS_REQUEST" });
+    dispatch({ type: "FETCH_PROJECTS_REQUEST" });
+  }, [dispatch]);
+
+  // Refetch tasks when filters change
+  useEffect(() => {
+    dispatch(fetchTasksRequest(filters));
+  }, [dispatch, filters]);
+
+  // Event handlers
   const handleCreateTask = () => {
-    // TODO: Dispatch open form action for create mode
+    dispatch(openTaskForm("create", null));
   };
 
   const handleEditTask = (taskId) => {
-    // TODO: Dispatch open form action for edit mode
+    dispatch(openTaskForm("edit", taskId));
   };
 
   const handleDeleteTask = (taskId) => {
-    // TODO: Show confirmation and dispatch delete action
+    dispatch(deleteTaskRequest(taskId));
   };
 
   const handleFormSubmit = (formData) => {
-    // TODO: Dispatch create or update action based on form mode
+    if (taskForm.mode === "create") {
+      dispatch(createTaskRequest(formData));
+    } else {
+      dispatch(updateTaskRequest(taskForm.taskId, formData));
+    }
   };
 
   const handleFormClose = () => {
-    // TODO: Dispatch close form action and clear localStorage
+    dispatch(closeTaskForm());
   };
 
   const handleFiltersChange = (newFilters) => {
-    // TODO: Dispatch filter change action
+    dispatch(setFilters(newFilters));
   };
 
   return (
     <div className="task-dashboard">
       <header className="dashboard-header">
         <h1>Task Management Dashboard</h1>
-        <button 
+        <button
           className="create-task-btn"
           onClick={handleCreateTask}
+          id="create-task-button"
         >
           + Create Task
         </button>
       </header>
 
-      {/* TODO: Show error messages */}
-      {/* {errors.tasks && (
-        <div className="error-banner">
-          Error: {errors.tasks}
+      {errors.tasks && (
+        <div className="error-banner">Error: {errors.tasks}</div>
+      )}
+
+      {errors.form && (
+        <div className="error-banner" style={{ background: "#f59e0b" }}>
+          {errors.form}
         </div>
-      )} */}
+      )}
 
       <FilterBar
-        // filters={filters}
-        // projects={projects}
-        // users={users}
+        filters={filters}
+        projects={projects}
+        users={users}
         onFiltersChange={handleFiltersChange}
       />
 
       <TaskList
-        // tasks={tasks}
-        // loading={loading.tasks}
+        tasks={tasks}
+        loading={loading.tasks}
         onEditTask={handleEditTask}
         onDeleteTask={handleDeleteTask}
       />
 
       <TaskForm
-        // isOpen={taskForm.isOpen}
-        // mode={taskForm.mode}
-        // initialData={taskForm.taskId ? tasks.find(t => t.id === taskForm.taskId) : null}
-        // users={users}
-        // projects={projects}
-        // loading={loading.tasks}
+        isOpen={taskForm.isOpen}
+        mode={taskForm.mode}
+        initialData={
+          taskForm.taskId ? tasks.find((t) => t.id === taskForm.taskId) : null
+        }
+        users={users}
+        projects={projects}
+        loading={loading.tasks}
         onSubmit={handleFormSubmit}
         onClose={handleFormClose}
       />
