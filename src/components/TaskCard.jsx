@@ -161,12 +161,9 @@ const TaskCard = ({ task, onEdit, onDelete }) => {
 
         {task.dueDate && (
           <div
-            className={`task-due-date ${new Date(task.dueDate) < new Date() ? "overdue" : ""}`}
+            className="task-due-date"
             style={{
-              color:
-                new Date(task.dueDate) < new Date()
-                  ? "#e74c3c"
-                  : getPriorityColor(task.priority),
+              color: "#e74c3c",
               fontWeight: "bold",
             }}
           >
